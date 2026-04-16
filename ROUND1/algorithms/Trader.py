@@ -20,7 +20,12 @@ class Trader:
             # Calculate acceptable price based on current position and observations 
 
             if product == "intarian_pepper_root":
-                acceptable_price = 
+                trades = state.market_trades[product]
+                if len(trades) > 0:
+                    latest_timestamp = max(t.timestamp for t in trades)
+                    acceptable_price = min(t.price for t in trades if t.timestamp == latest_timestamp)
+                else:
+                    acceptable_price = 1
 
             # MY SECTION 
 
@@ -34,13 +39,13 @@ class Trader:
 
             if len(order_depth.sell_orders) != 0:
                 best_ask, best_ask_amount = list(order_depth.sell_orders.items())[0]
-                if int(best_ask) < acceptable_price:
+                if int(best_ask) <= acceptable_price:
                     print("BUY", str(-best_ask_amount) + "x", best_ask)
                     orders.append(Order(product, best_ask, -best_ask_amount))
     
             if len(order_depth.buy_orders) != 0:
                 best_bid, best_bid_amount = list(order_depth.buy_orders.items())[0]
-                if int(best_bid) > acceptable_price:
+                if int(best_bid) >= acceptable_price:
                     print("SELL", str(best_bid_amount) + "x", best_bid)
                     orders.append(Order(product, best_bid, -best_bid_amount))
             
