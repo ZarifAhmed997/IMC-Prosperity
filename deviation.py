@@ -3,22 +3,30 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-FILE_PATH = 'TUTORIAL_ROUND_1/trades_round_0_day_-1.csv'
+config = {}
+with open("info.txt", "r") as file:
+    for line in file:
+        key, value = line.strip().split('=')
+        config[key] = value
 
-SYMBOL = 'TOMATOES'
+TRADES = config['trades_file']
+PRICES = config['prices_file']
+SYMBOL = config['plot_type']
+PRICE_TYPE = config['price_type']
+PRODUCT_COLUMN = config['product_column']
 
-file = pd.read_csv(FILE_PATH, sep=';') 
-data = file[file['symbol'] == SYMBOL].copy()
+print(f"Loading: {TRADES} | Symbol: {SYMBOL}")
 
-data['deviation'] = pd.to_numeric(data['price'] - data['price'].shift(1))
+file = pd.read_csv(TRADES, sep=';') 
+data = file[file[PRODUCT_COLUMN] == SYMBOL].copy()
+
+data['deviation'] = pd.to_numeric(data[PRICE_TYPE] - data[PRICE_TYPE].shift(1))
 
 clean_data = data.groupby('timestamp')['deviation'].mean().reset_index()
 
 plt.figure(figsize=(12, 6))
 plt.plot(clean_data['timestamp'], clean_data['deviation'], color='#2ca02c' , linestyle='none')
 plt.scatter(clean_data['timestamp'], clean_data['deviation'], color='#2ca02c', s=10, alpha=0.7, label='Mean Execution Price')
-
-plt.scatter(data['timestamp'], data['deviation'], color='black', s=10, alpha=0.3, label='Individual Trades')
 
 plt.title(f'{SYMBOL} Deviation from last price')
 plt.xlabel('Timestamp (ms)')

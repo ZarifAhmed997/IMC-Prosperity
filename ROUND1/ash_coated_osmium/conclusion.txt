@@ -1,0 +1,8 @@
+This product has a fixed mid-price and is mean-reverting (the fair value price seems to be the mid-price which is 10000)
+The Ask is consistently higher than the Bid. The spread looks to be roughly between 10 to 20 units, with certain
+'bands' of spreads like 13, 18 and 20 as high volume spreads. 
+Since the spread is basically fixed for the three historical data days, lets use the spread to market-make by
+pricing above the bid and just under the ask to make spread profit.
+
+RISK: in case the spread starts to deviate from the 'bands' and inventory hits the maximum, move the fair value
+      to some new value to reflect the trend, and keep the same spread market making strategy.

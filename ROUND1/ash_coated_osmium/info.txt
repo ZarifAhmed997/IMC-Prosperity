@@ -1,0 +1,4 @@
+prices_file=ROUND1/prices_round_1_day_0.csv
+plot_type=ASH_COATED_OSMIUM
+price_type=price
+product_column=product

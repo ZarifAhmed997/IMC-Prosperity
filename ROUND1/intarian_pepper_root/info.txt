@@ -1,0 +1,4 @@
+prices_file=ROUND1/trades_round_1_day_-2.csv
+plot_type=INTARIAN_PEPPER_ROOT
+price_type=price
+product_column=symbol

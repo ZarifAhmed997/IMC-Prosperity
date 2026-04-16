@@ -1,0 +1,3 @@
+The trade graph shows that the trades being made consistent go at a higher price. Price goes up at a
+rate of 1/1000 per time unit consistently for the 3 days.
+We should buy as soon as market open is and sell at the end, as price increases the whole time.
