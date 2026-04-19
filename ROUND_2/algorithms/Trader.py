@@ -51,6 +51,8 @@ class Trader:
             if product == "INTARIAN_PEPPER_ROOT" and buy_orders and sell_orders:
                 current_position = state.position.get(product, 0)
 
+                if self.START_PRICE is None:
+                    self.START_PRICE = (max(buy_orders) + min(sell_orders)) / 2
                 
                 best_bid = max(buy_orders)
                 best_ask = min(sell_orders)
