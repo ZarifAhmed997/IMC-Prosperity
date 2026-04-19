@@ -1,5 +1,6 @@
 from datamodel import OrderDepth, UserId, TradingState, Order
 from typing import List
+import math as Math
 
 class Trader:
     def run(self, state: TradingState):
@@ -16,7 +17,7 @@ class Trader:
             buy_orders = order_depth.buy_orders
             sell_orders = order_depth.sell_orders
 
-            if product == "INTARIAN_PEPPER_ROOT":
+            if product == "INTARIAN_PEPPER_ROOT" and buy_orders and sell_orders:
                 current_position = state.position.get(product, 0)
                 remaining_capacity = LIMIT_QTY - current_position
 

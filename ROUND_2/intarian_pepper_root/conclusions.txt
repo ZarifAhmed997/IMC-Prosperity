@@ -1,0 +1,7 @@
+Using a mean-reverting algorithm
+--------------------------------
+
+1. Use fixed 0.001 slope with initial price as price from first run.
+2. Use a constant deviation multiplier to multiply the order size depending on deviation from slope 
+   (adjusted manually to maximise pnl).
+3. Either make a buy order or sell order depending on the deviation, (negative deviation gives a buy order)

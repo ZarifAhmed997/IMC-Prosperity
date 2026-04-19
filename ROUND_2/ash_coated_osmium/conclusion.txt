@@ -1,0 +1,8 @@
+This product has a fixed mid-price and is mean-reverting (the fair value price seems to be the mid-price which is 10000)
+The Ask is consistently higher than the Bid. The spread looks to be roughly between 10 to 20 units, with certain
+'bands' of spreads like 13, 18 and 20 as high volume spreads. 
+Since the spread is basically fixed for the three historical data days. Use the spread to market-make by
+pricing above the bid and just under the ask to make spread profit.
+
+The optimum volume/order size is given by the volume graph. As can be seen, the volume for the prices are concentrated between
+10 and 15, hence to fully fill our order, we should keep the order size between those values.
