@@ -10,13 +10,17 @@ class Trader:
         self.LIMIT_QTY = 80
         self.START_PRICE = None
         self.ORDER_SIZE = 13
-        self.ROOT_SLOPE = 0.001
+        self.ROOT_SLOPE = 0.00145
         self.MAX_VARIANCE = 28
-        self.WINDOW_SIZE = 100
+        self.WINDOW_SIZE = 50
         self.prices = []
 
-    def bid(self, price, qty):
-        return 15
+        self.total_orders = 0
+        self.total_buy_orders = 0
+        self.total_sell_orders = 0
+
+    def bid(self):
+        return 10000
 
     def run(self, state: TradingState):
         print("traderData: " + state.traderData)
@@ -43,7 +47,7 @@ class Trader:
                     trade_qty = min(available_qty, remaining_capacity)
                     trade_qty = min(trade_qty, self.ORDER_SIZE)
 
-                    if trade_qty > 0 and ask_price % 1000 > 990 or ask_price % 1000 < 10:
+                    if trade_qty > 0 and ask_price % 1000 >  990 or ask_price % 1000 < 10:
                         orders.append(Order(product, ask_price, trade_qty))
                         remaining_capacity -= trade_qty
             '''
@@ -61,10 +65,10 @@ class Trader:
                 self.prices.append(mid_price)
                 if len(self.prices) > self.WINDOW_SIZE: self.prices.pop(0)
 
-                start_price, root_slope = self.regression_line(self.prices)
-                fair_value = root_slope * (len(self.prices) - 1) + start_price
+                # start_price, root_slope = self.regression_line(self.prices)
+                # fair_value = root_slope * (len(self.prices) - 1) + start_price
 
-                # current_fair_price = self.START_PRICE + self.ROOT_SLOPE * state.timestamp (fixed true price)
+                fair_value = self.START_PRICE + self.ROOT_SLOPE * state.timestamp
 
                 # Deviation from the trend line with linear scaling between order sizes -80 and 80
 
@@ -77,6 +81,9 @@ class Trader:
                 # order_size = max(0, int(order_size))
               
                 orders.append(Order(product, best_ask, order_size))
+
+                print(f"Timestamp: {state.timestamp} | Total Orders: {self.total_orders} | Buys: {self.total_buy_orders} | Sells: {self.total_sell_orders} | Position: {current_position} | Mid: {mid_price:.2f} | Fair: {fair_value:.2f} | Deviation: {mid_price - fair_value:.2f}")
+
 
             elif product == "ASH_COATED_OSMIUM" and buy_orders and sell_orders:
                 current_position = state.position.get(product, 0)
