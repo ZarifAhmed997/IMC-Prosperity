@@ -1,5 +1,6 @@
 from datamodel import OrderDepth, UserId, TradingState, Order
 from typing import List
+import numpy
 import math as Math
 
 class Trader:
